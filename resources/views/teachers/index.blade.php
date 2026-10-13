@@ -43,8 +43,8 @@
 
     <!-- TABLE -->
     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="w-full text-xs text-left">
+        <div class="overflow-x-auto w-full">
+            <table class="w-full text-xs text-left min-w-[720px]">
                 <thead>
                     <tr class="bg-slate-50 text-slate-500 border-b border-slate-200 uppercase font-semibold text-[10px]">
                         <th class="py-3 px-4 w-12 text-center">No</th>
@@ -134,7 +134,7 @@
             <button onclick="closeAddModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
         </div>
 
-        <form action="{{ route('teachers.store') }}" method="POST" class="mt-4 space-y-3.5">
+        <form action="{{ route('teachers.store') }}" method="POST" enctype="multipart/form-data" class="mt-4 space-y-3.5">
             @csrf
             <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">Nama Lengkap & Gelar</label>
@@ -158,6 +158,10 @@
                 <label class="block text-xs font-bold text-slate-700 mb-1">Nomor Telepon / WhatsApp</label>
                 <input type="text" name="phone" class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="0812...">
             </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Unggah Tanda Tangan Guru (Opsional)</label>
+                <input type="file" name="signature_image" accept="image/*" class="w-full text-[11px] file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[11px] file:font-bold file:bg-blue-50 file:text-blue-700 text-slate-500">
+            </div>
 
             <div class="pt-3 flex items-center justify-end gap-2 border-t border-slate-100">
                 <button type="button" onclick="closeAddModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100">Batal</button>
@@ -175,7 +179,7 @@
             <button onclick="closeEditModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
         </div>
 
-        <form id="editForm" method="POST" class="mt-4 space-y-3.5">
+        <form id="editForm" method="POST" enctype="multipart/form-data" class="mt-4 space-y-3.5">
             @csrf
             @method('PUT')
             <div>
@@ -201,6 +205,19 @@
                 <input type="text" id="editPhone" name="phone" class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
             </div>
 
+            <!-- Tanda Tangan Guru Preview & Upload -->
+            <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Tanda Tangan Guru</label>
+                <div id="editSignaturePreview" class="hidden mb-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                    <img id="editSignatureImg" src="" alt="TTD Guru" class="max-h-12 object-contain">
+                    <label class="inline-flex items-center gap-1.5 text-xs text-rose-600 font-semibold cursor-pointer">
+                        <input type="checkbox" name="remove_signature_image" value="1" class="rounded text-rose-600">
+                        <span>Hapus TTD</span>
+                    </label>
+                </div>
+                <input type="file" name="signature_image" accept="image/*" class="w-full text-[11px] file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[11px] file:font-bold file:bg-blue-50 file:text-blue-700 text-slate-500">
+            </div>
+
             <div class="pt-3 flex items-center justify-end gap-2 border-t border-slate-100">
                 <button type="button" onclick="closeEditModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100">Batal</button>
                 <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-500/20">Perbarui Data</button>
@@ -220,6 +237,16 @@
         document.getElementById('editTarget').value = teacher.target_hours;
         document.getElementById('editRole').value = teacher.additional_role || '';
         document.getElementById('editPhone').value = teacher.phone || '';
+
+        const previewContainer = document.getElementById('editSignaturePreview');
+        const previewImg = document.getElementById('editSignatureImg');
+        if (teacher.signature_image) {
+            previewImg.src = '/' + teacher.signature_image;
+            previewContainer.classList.remove('hidden');
+        } else {
+            previewContainer.classList.add('hidden');
+        }
+
         document.getElementById('editModal').classList.remove('hidden');
     }
     function closeEditModal() { document.getElementById('editModal').classList.add('hidden'); }

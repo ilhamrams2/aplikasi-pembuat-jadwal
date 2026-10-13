@@ -195,6 +195,180 @@ class ScheduleGeneratorService
     }
 
     /**
+     * Generate schedule automatically for a specific classroom.
+     * Existing schedules for this classroom will be cleared, while preserving all other classes.
+     * Respects teacher occupancy from other classrooms to prevent any clashes.
+     *
+     * @param int $classroomId
+     * @return array [success => bool, message => string, total_placed => int, unplaced => array, classroom => Classroom]
+     */
+    public function generateClass(int $classroomId): array
+    {
+        return DB::transaction(function () use ($classroomId) {
+            $classroom = Classroom::with('assignments.teacher', 'assignments.subject')->findOrFail($classroomId);
+
+            // 1. Clear existing schedules ONLY for this classroom
+            Schedule::where('classroom_id', $classroomId)->delete();
+
+            $timeSlots = TimeSlot::where('is_break', false)->orderBy('day')->orderBy('period')->get();
+
+            // Structure slots by day
+            $slotsByDay = [];
+            foreach ($timeSlots as $slot) {
+                $slotsByDay[$slot->day][$slot->period] = $slot;
+            }
+
+            // 2. Track teacher occupancy from OTHER classrooms
+            $teacherBusy = [];
+            $otherSchedules = Schedule::where('classroom_id', '!=', $classroomId)->get();
+            foreach ($otherSchedules as $s) {
+                $teacherBusy[$s->teacher_id][$s->day][$s->period] = true;
+            }
+
+            // Track occupancy for this classroom
+            $classBusy = [];
+            $classSubjectDays = [];
+
+            $days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
+            $allUnplaced = [];
+            $totalPlaced = 0;
+
+            // 3. Get all assignments for this classroom
+            $assignments = $classroom->assignments()->with('teacher', 'subject')->get();
+            $sortedAssignments = $assignments->sortByDesc('hours_per_week');
+
+            foreach ($sortedAssignments as $assignment) {
+                $totalHours = $assignment->hours_per_week;
+                $teacherId = $assignment->teacher_id;
+                $subjectId = $assignment->subject_id;
+                $classId = $classroom->id;
+
+                $blocks = $this->splitIntoBlocks($totalHours);
+
+                foreach ($blocks as $blockSize) {
+                    $placed = false;
+
+                    $dayCandidates = $days;
+                    shuffle($dayCandidates);
+
+                    usort($dayCandidates, function ($a, $b) use ($classSubjectDays, $classId, $subjectId) {
+                        $usedA = in_array($a, $classSubjectDays[$classId][$subjectId] ?? []);
+                        $usedB = in_array($b, $classSubjectDays[$classId][$subjectId] ?? []);
+                        return $usedA <=> $usedB;
+                    });
+
+                    foreach ($dayCandidates as $day) {
+                        if (!isset($slotsByDay[$day])) continue;
+
+                        $daySlots = $slotsByDay[$day];
+                        $maxPeriod = max(array_keys($daySlots));
+
+                        $periodCandidates = [];
+                        for ($p = 1; $p <= ($maxPeriod - $blockSize + 1); $p++) {
+                            $periodCandidates[] = $p;
+                        }
+                        shuffle($periodCandidates);
+
+                        foreach ($periodCandidates as $startPeriod) {
+                            $canFit = true;
+                            for ($offset = 0; $offset < $blockSize; $offset++) {
+                                $p = $startPeriod + $offset;
+                                if (!isset($daySlots[$p])) {
+                                    $canFit = false;
+                                    break;
+                                }
+                                if (isset($classBusy[$classId][$day][$p])) {
+                                    $canFit = false;
+                                    break;
+                                }
+                                if (isset($teacherBusy[$teacherId][$day][$p])) {
+                                    $canFit = false;
+                                    break;
+                                }
+                            }
+
+                            if ($canFit) {
+                                for ($offset = 0; $offset < $blockSize; $offset++) {
+                                    $p = $startPeriod + $offset;
+                                    $slot = $daySlots[$p];
+
+                                    Schedule::create([
+                                        'classroom_id' => $classId,
+                                        'time_slot_id' => $slot->id,
+                                        'teacher_assignment_id' => $assignment->id,
+                                        'teacher_id' => $teacherId,
+                                        'subject_id' => $subjectId,
+                                        'day' => $day,
+                                        'period' => $p,
+                                        'room' => 'R.' . $classroom->name,
+                                    ]);
+
+                                    $classBusy[$classId][$day][$p] = true;
+                                    $teacherBusy[$teacherId][$day][$p] = true;
+                                    $totalPlaced++;
+                                }
+
+                                $classSubjectDays[$classId][$subjectId][] = $day;
+                                $placed = true;
+                                break;
+                            }
+                        }
+
+                        if ($placed) break;
+                    }
+
+                    if (!$placed) {
+                        // Fallback: try placing individual 1-hour slots
+                        for ($rem = 0; $rem < $blockSize; $rem++) {
+                            $singlePlaced = false;
+                            foreach ($days as $day) {
+                                if (!isset($slotsByDay[$day])) continue;
+                                foreach ($slotsByDay[$day] as $p => $slot) {
+                                    if (!isset($classBusy[$classId][$day][$p]) && !isset($teacherBusy[$teacherId][$day][$p])) {
+                                        Schedule::create([
+                                            'classroom_id' => $classId,
+                                            'time_slot_id' => $slot->id,
+                                            'teacher_assignment_id' => $assignment->id,
+                                            'teacher_id' => $teacherId,
+                                            'subject_id' => $subjectId,
+                                            'day' => $day,
+                                            'period' => $p,
+                                            'room' => 'R.' . $classroom->name,
+                                        ]);
+                                        $classBusy[$classId][$day][$p] = true;
+                                        $teacherBusy[$teacherId][$day][$p] = true;
+                                        $totalPlaced++;
+                                        $singlePlaced = true;
+                                        break;
+                                    }
+                                }
+                                if ($singlePlaced) break;
+                            }
+
+                            if (!$singlePlaced) {
+                                $allUnplaced[] = [
+                                    'classroom' => $classroom->name,
+                                    'teacher' => $assignment->teacher->name,
+                                    'subject' => $assignment->subject->name,
+                                    'hours' => 1,
+                                ];
+                            }
+                        }
+                    }
+                }
+            }
+
+            return [
+                'success' => true,
+                'message' => "Jadwal untuk Kelas {$classroom->name} berhasil digenerate otomatis!",
+                'total_placed' => $totalPlaced,
+                'unplaced' => $allUnplaced,
+                'classroom' => $classroom,
+            ];
+        });
+    }
+
+    /**
      * Split subject weekly hours into realistic pedagogical blocks.
      */
     private function splitIntoBlocks(int $hours): array

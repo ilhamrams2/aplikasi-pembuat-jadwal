@@ -39,8 +39,8 @@
 
     <!-- TABLE -->
     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="w-full text-xs text-left">
+        <div class="overflow-x-auto w-full">
+            <table class="w-full text-xs text-left min-w-[600px]">
                 <thead>
                     <tr class="bg-slate-50 text-slate-500 border-b border-slate-200 uppercase font-semibold text-[10px]">
                         <th class="py-3 px-4 w-12 text-center">No</th>

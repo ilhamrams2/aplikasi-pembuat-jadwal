@@ -49,6 +49,18 @@ class TeacherController extends Controller
         $validated['order_no'] = $maxOrder + 1;
         $validated['color'] = '#' . substr(md5($validated['name']), 0, 6);
 
+        if ($request->hasFile('signature_image')) {
+            $request->validate(['signature_image' => 'image|mimes:jpeg,png,jpg,webp,svg|max:3072']);
+            $file = $request->file('signature_image');
+            $filename = 'teacher_' . time() . '_' . rand(100,999) . '.' . $file->getClientOriginalExtension();
+            $destination = public_path('uploads/signatures');
+            if (!\Illuminate\Support\Facades\File::isDirectory($destination)) {
+                \Illuminate\Support\Facades\File::makeDirectory($destination, 0755, true, true);
+            }
+            $file->move($destination, $filename);
+            $validated['signature_image'] = 'uploads/signatures/' . $filename;
+        }
+
         Teacher::create($validated);
 
         return back()->with('success', 'Data guru berhasil ditambahkan.');
@@ -65,6 +77,26 @@ class TeacherController extends Controller
             'target_hours' => 'required|integer|min:0|max:60',
             'phone' => 'nullable|string|max:30',
         ]);
+
+        if ($request->boolean('remove_signature_image')) {
+            if ($teacher->signature_image && \Illuminate\Support\Facades\File::exists(public_path($teacher->signature_image))) {
+                \Illuminate\Support\Facades\File::delete(public_path($teacher->signature_image));
+            }
+            $validated['signature_image'] = null;
+        } elseif ($request->hasFile('signature_image')) {
+            $request->validate(['signature_image' => 'image|mimes:jpeg,png,jpg,webp,svg|max:3072']);
+            $file = $request->file('signature_image');
+            $filename = 'teacher_' . $teacher->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $destination = public_path('uploads/signatures');
+            if (!\Illuminate\Support\Facades\File::isDirectory($destination)) {
+                \Illuminate\Support\Facades\File::makeDirectory($destination, 0755, true, true);
+            }
+            if ($teacher->signature_image && \Illuminate\Support\Facades\File::exists(public_path($teacher->signature_image))) {
+                \Illuminate\Support\Facades\File::delete(public_path($teacher->signature_image));
+            }
+            $file->move($destination, $filename);
+            $validated['signature_image'] = 'uploads/signatures/' . $filename;
+        }
 
         $teacher->update($validated);
 
