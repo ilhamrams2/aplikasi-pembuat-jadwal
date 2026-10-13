@@ -338,8 +338,8 @@ class ScheduleController extends Controller
             'title' => 'JADWAL PELAJARAN SEMESTER ' . strtoupper($settings['semester'] ?? 'Ganjil'),
             'school_name' => strtoupper($settings['school_name'] ?? 'MAN 20 JAKARTA TIMUR'),
             'academic_year' => 'TAHUN PELAJARAN ' . ($settings['academic_year'] ?? '2026/2027'),
-            'revision' => 'REVISI_RESMI BERLAKU MULAI : Senin, 12 Oktober 2026',
-            'date_signed' => 'Jakarta, 13 Juli 2026',
+            'revision' => $settings['schedule_revision'] ?? 'REVISI4_BERLAKU MULAI : Senin, 12 Oktober 2026',
+            'date_signed' => $settings['date_signed'] ?? 'Jakarta, 13 Juli 2026',
             'principal_name' => $settings['principal_name'] ?? 'Drs. SODIKIN, M.Si.',
             'principal_nip' => $settings['principal_nip'] ?? '196805101994031002',
             'principal_title' => 'Kepala MAN 20 Jakarta',
@@ -492,7 +492,28 @@ class ScheduleController extends Controller
                     if (isset($schedulesMap[$day][$pNum][$cls->id])) {
                         $s = $schedulesMap[$day][$pNum][$cls->id];
                         $teacherOrder = $s->teacher->order_no ?? null;
-                        $slots[$cls->id] = $teacherOrder ? (string)$teacherOrder : 'G' . $s->teacher_id;
+
+                        if ($hasPramukaGrade10 && $cls->grade == 10) {
+                            $code = 'PRAMUKA';
+                        } elseif ($teacherOrder) {
+                            $code = (string)$teacherOrder;
+                            $subName = $s->subject->name ?? '';
+                            if ($teacherOrder == 15) {
+                                $code .= str_contains($subName, 'EKONOMI') ? 'E' : 'P';
+                            } elseif ($teacherOrder == 17 && str_contains($subName, 'TINGKAT LANJUT')) {
+                                $code .= 'T';
+                            } elseif ($teacherOrder == 18) {
+                                $code .= str_contains($subName, 'AKIDAH') ? 'A' : 'Q';
+                            } elseif ($teacherOrder == 30) {
+                                $code .= str_contains($subName, 'GEOGRAFI') ? 'G' : 'P';
+                            } elseif ($teacherOrder == 33) {
+                                $code .= str_contains($subName, 'SEJARAH') ? 'S' : 'P';
+                            }
+                        } else {
+                            $code = 'G' . $s->teacher_id;
+                        }
+
+                        $slots[$cls->id] = $code;
                     } else {
                         $slots[$cls->id] = '';
                     }

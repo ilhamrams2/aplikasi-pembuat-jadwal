@@ -54,7 +54,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                             <i class="fa-regular fa-envelope text-sm"></i>
                         </div>
-                        <input type="email" id="email" name="email" value="{{ old('email', 'admin@man20.sch.id') }}" required autofocus
+                        <input type="email" id="email" name="email" value="{{ old('email') }}" required autofocus
                                class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white outline-none transition"
                                placeholder="nama@man20.sch.id">
                     </div>
@@ -66,7 +66,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                             <i class="fa-solid fa-lock text-sm"></i>
                         </div>
-                        <input type="password" id="password" name="password" value="admin123" required
+                        <input type="password" id="password" name="password" value="" required
                                class="w-full pl-10 pr-10 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white outline-none transition"
                                placeholder="••••••••">
                         <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600">
@@ -87,28 +87,6 @@
                     Masuk ke Sistem <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
                 </button>
             </form>
-
-            <!-- Quick Demo Credentials Hint -->
-            <div class="mt-6 pt-5 border-t border-slate-100 text-center">
-                <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-3 text-left">
-                    <p class="text-[11px] font-bold text-blue-900 mb-1 flex items-center gap-1.5">
-                        <i class="fa-solid fa-key text-blue-600"></i> Akun Login Default:
-                    </p>
-                    <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-600 font-mono mt-1">
-                        <div>
-                            <span class="text-slate-400">Email:</span><br>
-                            <span class="font-semibold text-slate-800">admin@man20.sch.id</span>
-                        </div>
-                        <div>
-                            <span class="text-slate-400">Password:</span><br>
-                            <span class="font-semibold text-slate-800">admin123</span>
-                        </div>
-                    </div>
-                    <div class="text-[10px] text-slate-500 mt-2">
-                        Atau gunakan email: <code class="text-blue-700 font-semibold">ilhamgans@gmail.com</code> (password: <code class="text-blue-700 font-semibold">admin123</code>)
-                    </div>
-                </div>
-            </div>
         </div>
 
         <p class="text-center text-xs text-slate-500 mt-6">

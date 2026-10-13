@@ -55,10 +55,36 @@
                            class="w-full text-xs p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
                 </div>
 
-                <div class="md:col-span-2">
+                <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">Wakil Kepala Bidang Akademik / Kurikulum</label>
                     <input type="text" name="waka_kurikulum" value="{{ $settings['waka_kurikulum'] ?? 'TEMY YULIANTI, S.Pd., M.Pd.' }}"
                            class="w-full text-xs p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Tempat & Tanggal Titimangsa Dokumen</label>
+                    <input type="text" name="date_signed" value="{{ $settings['date_signed'] ?? 'Jakarta, 13 Juli 2026' }}"
+                           class="w-full text-xs p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                           placeholder="Contoh: Jakarta, 13 Juli 2026">
+                </div>
+
+                <!-- Input Keterangan Revisi & Mulai Berlaku -->
+                <div class="md:col-span-2 bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-2xl border border-blue-200 shadow-2xs">
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <i class="fa-solid fa-clock-rotate-left text-blue-600 text-sm"></i>
+                        <label class="block text-xs font-black text-slate-800">
+                            Keterangan Revisi & Mulai Berlaku Jadwal Pelajaran
+                        </label>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-200/70 text-blue-900 ml-auto">
+                            Dicetak di Dokumen
+                        </span>
+                    </div>
+                    <input type="text" name="schedule_revision" value="{{ $settings['schedule_revision'] ?? 'REVISI4_BERLAKU MULAI : Senin, 12 Oktober 2026' }}" required
+                           class="w-full text-xs p-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-800 shadow-2xs"
+                           placeholder="Contoh: REVISI4_BERLAKU MULAI : Senin, 12 Oktober 2026">
+                    <p class="text-[11px] text-slate-600 mt-1.5">
+                        Teks ini dicetak tepat di bawah judul jadwal pelajaran pada lembar master matrix, cetak kelas, dan ekspor excel/PDF (Contoh format: <em>REVISI4_BERLAKU MULAI : Senin, 12 Oktober 2026</em>).
+                    </p>
                 </div>
             </div>
 

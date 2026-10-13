@@ -18,7 +18,8 @@ class SettingController extends Controller
     {
         $fields = [
             'school_name', 'school_address', 'academic_year', 'semester',
-            'principal_name', 'principal_nip', 'waka_kurikulum'
+            'principal_name', 'principal_nip', 'waka_kurikulum',
+            'schedule_revision', 'date_signed'
         ];
 
         foreach ($fields as $field) {

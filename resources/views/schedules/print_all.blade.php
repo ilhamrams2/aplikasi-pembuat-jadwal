@@ -379,6 +379,9 @@
                 <a href="{{ route('schedules.index') }}" class="btn-action btn-back">
                     <i class="fa-solid fa-arrow-left"></i> Kembali
                 </a>
+                <button type="button" onclick="editRevisionDirectly()" class="btn-action btn-print-dialog" title="Ubah Keterangan Revisi & Tanggal Mulai Berlaku">
+                    <i class="fa-solid fa-pen-to-square"></i> Ubah Mulai Berlaku
+                </button>
                 <a href="{{ route('pikets.index') }}" class="btn-action btn-print-dialog" title="Kelola Jadwal Guru Piket">
                     <i class="fa-solid fa-clipboard-user"></i> Ubah Guru Piket
                 </a>
@@ -403,7 +406,7 @@
                 <h3>{{ $header['academic_year'] ?? 'TAHUN PELAJARAN 2026-2027' }}</h3>
             </div>
 
-            <div class="revision-bar">
+            <div class="revision-bar" id="revisionBar" contenteditable="true" spellcheck="false" title="Klik langsung untuk mengedit teks tanggal mulai berlaku ini">
                 {{ $header['revision'] ?? 'REVISI4_BERLAKU MULAI : Senin, 12 Oktober 2026' }}
             </div>
 
@@ -418,7 +421,7 @@
                             'Selasa' => "S<br>E<br>L<br>A<br>S<br>A",
                             'Rabu' => "R<br>A<br>B<br>U",
                             'Kamis' => "K<br>A<br>M<br>I<br>S",
-                            'Jumat' => "J<br>U<br>M<br>-<br>'<br>A<br>T",
+                            'Jumat' => "J<br>U<br>M<br>A<br>T",
                         ];
                         $totalClassCount = $classrooms->count();
                         $grade10Count = $classrooms->where('grade', 10)->count();
@@ -765,6 +768,15 @@
         }
         function closePiketModal() {
             document.getElementById('piketModal').style.display = 'none';
+        }
+
+        function editRevisionDirectly() {
+            const el = document.getElementById('revisionBar');
+            const current = el.innerText.trim();
+            const newVal = prompt('Ubah Keterangan Revisi & Tanggal Mulai Berlaku Jadwal:', current);
+            if (newVal !== null && newVal.trim() !== '') {
+                el.innerText = newVal.trim();
+            }
         }
     </script>
 

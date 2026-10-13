@@ -10,7 +10,9 @@ use App\Models\Subject;
 use App\Models\TeacherAssignment;
 use App\Models\TimeSlot;
 use App\Models\SchoolSetting;
+use App\Models\Schedule;
 use App\Services\ScheduleGeneratorService;
+use App\Services\OfficialScheduleData;
 use Illuminate\Support\Facades\Hash;
 
 class ScheduleDataSeeder extends Seeder
@@ -208,11 +210,11 @@ class ScheduleDataSeeder extends Seeder
                 'additional_role' => 'Piket',
                 'assignments' => [
                     ['subject' => 'BK', 'classes' => [
-                        ['classroom' => 'XII.1', 'hours' => 1],
-                        ['classroom' => 'XII.2', 'hours' => 1],
-                        ['classroom' => 'XII.3', 'hours' => 1],
-                        ['classroom' => 'XII.4', 'hours' => 1],
-                        ['classroom' => 'XII.5', 'hours' => 1],
+                        ['classroom' => 'XI.1', 'hours' => 1],
+                        ['classroom' => 'XI.2', 'hours' => 1],
+                        ['classroom' => 'XI.3', 'hours' => 1],
+                        ['classroom' => 'XI.4', 'hours' => 1],
+                        ['classroom' => 'XI.5', 'hours' => 1],
                     ]],
                 ],
             ],
@@ -429,7 +431,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 17,
+                'order_no' => 16,
                 'name' => 'SITI BAROROH, S.Pd.',
                 'target_hours' => 29,
                 'additional_role' => 'WALI KELAS, PEMBINA  EKSKUL, PIKET',
@@ -443,7 +445,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 18,
+                'order_no' => 17,
                 'name' => 'OMID SYAMSUDIN S.Ag.',
                 'target_hours' => 25,
                 'additional_role' => '',
@@ -461,7 +463,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 19,
+                'order_no' => 18,
                 'name' => 'HIDAYAT MUSTOFA, S.Pd.I.',
                 'target_hours' => 24,
                 'additional_role' => 'WAKIL KEPALA BIDANG SARPRAS',
@@ -479,7 +481,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 20,
+                'order_no' => 19,
                 'name' => 'MIFTAH ELFALAH, SE.',
                 'target_hours' => 27,
                 'additional_role' => 'WALI KELAS, PIKET',
@@ -499,7 +501,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 21,
+                'order_no' => 20,
                 'name' => 'WAHYU UJIANTO, S.S.',
                 'target_hours' => 32,
                 'additional_role' => 'WAKIL KEPALA BIDANG HUMAS',
@@ -513,7 +515,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 22,
+                'order_no' => 21,
                 'name' => 'ALI SUBHAN, S.Ag.',
                 'target_hours' => 31,
                 'additional_role' => 'WALI KELAS, PIKET',
@@ -535,7 +537,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 23,
+                'order_no' => 22,
                 'name' => 'FERIYA HASTUTI, S.S.',
                 'target_hours' => 36,
                 'additional_role' => 'WALI KELAS',
@@ -560,7 +562,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 24,
+                'order_no' => 23,
                 'name' => 'RIZAL, S.Pd.',
                 'target_hours' => 27,
                 'additional_role' => 'KEPALA PERPUSTAKAAN',
@@ -575,22 +577,22 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 25,
+                'order_no' => 24,
                 'name' => 'NURHASANAH, S.Pd.',
                 'target_hours' => 28,
                 'additional_role' => 'STAF WAKIL KEPALA BIDANG AKADEMIK, PEMBINA  EKSKUL, PIKET',
                 'assignments' => [
                     ['subject' => 'BK', 'classes' => [
-                        ['classroom' => 'XI.1', 'hours' => 1],
-                        ['classroom' => 'XI.2', 'hours' => 1],
-                        ['classroom' => 'XI.3', 'hours' => 1],
-                        ['classroom' => 'XI.4', 'hours' => 1],
-                        ['classroom' => 'XI.5', 'hours' => 1],
+                        ['classroom' => 'XII.1', 'hours' => 1],
+                        ['classroom' => 'XII.2', 'hours' => 1],
+                        ['classroom' => 'XII.3', 'hours' => 1],
+                        ['classroom' => 'XII.4', 'hours' => 1],
+                        ['classroom' => 'XII.5', 'hours' => 1],
                     ]],
                 ],
             ],
             [
-                'order_no' => 26,
+                'order_no' => 25,
                 'name' => 'PUTRI DWI LESTARI, S.Pd.',
                 'target_hours' => 36,
                 'additional_role' => 'STAF WAKIL KEPALA BIDANG KESISWAAN, WALI KELAS',
@@ -611,7 +613,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 27,
+                'order_no' => 26,
                 'name' => 'MUHAMMAD SUWANDI, S.Pd.',
                 'target_hours' => 24,
                 'additional_role' => 'WAKIL KEPALA BIDANG KESISWAAN',
@@ -627,7 +629,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 28,
+                'order_no' => 27,
                 'name' => 'LEYLIA ARUM AMALUN NISA, S.Pd.',
                 'target_hours' => 32,
                 'additional_role' => 'WALI KELAS, PEMBINA  EKSKUL, PIKET',
@@ -647,7 +649,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 29,
+                'order_no' => 28,
                 'name' => 'ARIEL BONARDO H. LIMBONG, S.Pd.',
                 'target_hours' => 31,
                 'additional_role' => 'KEPALA LAB BAHASA, PEMBINA  EKSKUL, PIKET',
@@ -665,7 +667,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 30,
+                'order_no' => 29,
                 'name' => 'CITRA ARIYANTI, S.Sos.',
                 'target_hours' => 28,
                 'additional_role' => 'PEMBINA  EKSKUL, PIKET',
@@ -680,7 +682,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 31,
+                'order_no' => 30,
                 'name' => 'HANNY MILLENIA S.Pd',
                 'target_hours' => 34,
                 'additional_role' => 'WALI KELAS, PEMBINA  EKSKUL, PIKET',
@@ -703,7 +705,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 32,
+                'order_no' => 31,
                 'name' => 'LINTANG ADI RAMADHAN, S.Pd.',
                 'target_hours' => 32,
                 'additional_role' => 'PEMBINA  EKSKUL',
@@ -728,7 +730,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 33,
+                'order_no' => 32,
                 'name' => 'M. IKHLAS, S.Pd.',
                 'target_hours' => 29,
                 'additional_role' => 'STAF WAKA BIDANG HUMAS, WALI KELAS, PEMBINA  EKSKUL, PIKET',
@@ -747,7 +749,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 34,
+                'order_no' => 33,
                 'name' => 'DIKA SAVITRI, S.Pd.',
                 'target_hours' => 30,
                 'additional_role' => '',
@@ -774,7 +776,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 35,
+                'order_no' => 34,
                 'name' => 'DANDY ARIF RINALDI, S.Pd.',
                 'target_hours' => 21,
                 'additional_role' => 'PEMBINA  EKSKUL',
@@ -787,11 +789,12 @@ class ScheduleDataSeeder extends Seeder
                         ['classroom' => 'X.5', 'hours' => 3],
                         ['classroom' => 'XI.1', 'hours' => 2],
                         ['classroom' => 'XI.2', 'hours' => 2],
+                        ['classroom' => 'XI.3', 'hours' => 2],
                     ]],
                 ],
             ],
             [
-                'order_no' => 36,
+                'order_no' => 35,
                 'name' => 'MUHAMAD RICO SAPUTRA, S.Pd.',
                 'target_hours' => 23,
                 'additional_role' => 'PEMBINA  OSIS, PIKET',
@@ -816,7 +819,7 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
             [
-                'order_no' => 37,
+                'order_no' => 36,
                 'name' => 'DIEGO WAHYU RAMADHAN, S.Kom.',
                 'target_hours' => 32,
                 'additional_role' => 'KEPALA LAB KOMPUTER',
@@ -835,6 +838,12 @@ class ScheduleDataSeeder extends Seeder
                 ],
             ],
         ];
+
+                // Bersihkan data penugasan & jadwal agar bersih 100%
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Schedule::truncate();
+        TeacherAssignment::truncate();
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         foreach ($teachersData as $tData) {
             $teacher = Teacher::updateOrCreate(
@@ -869,8 +878,136 @@ class ScheduleDataSeeder extends Seeder
             }
         }
 
-        // 7. Otomatis Generate Jadwal Pelajaran (Anti-Bentrok)
-        $generator = new ScheduleGeneratorService();
-        $generator->generateAll();
+        // 7. Pemetaan Wali Kelas (Homeroom Teachers) Resmi MAN 20 Jakarta Sesuai SK
+        $walasMapping = [
+            'X.1' => 'LINDA AGUNG, S.TP',
+            'X.2' => 'SITI RUWAIDAH, S.Pd.',
+            'X.3' => 'M. IKHLAS, S.Pd.',
+            'X.4' => 'PUTRI DWI LESTARI, S.Pd.',
+            'X.5' => 'IPONG ROHIMAH S.Ag.',
+            'XI.1' => 'MIFTAH ELFALAH, SE.',
+            'XI.2' => 'MIFTAHUL JANNAH, S.Pd, M.Si',
+            'XI.3' => 'LEYLIA ARUM AMALUN NISA, S.Pd.',
+            'XI.4' => 'HANNY MILLENIA S.Pd',
+            'XI.5' => 'FERIYA HASTUTI, S.S.',
+            'XII.1' => 'ALI SUBHAN, S.Ag.',
+            'XII.2' => 'SITI HASANAH, S.Ag.',
+            'XII.3' => 'FIRMANSYAH, S.Ag.,M.Hum.',
+            'XII.4' => 'DENI SUTEDI, MM.Pd.',
+            'XII.5' => 'SITI BAROROH, S.Pd.',
+        ];
+
+        foreach ($walasMapping as $className => $teacherName) {
+            $walasTeacher = Teacher::where('name', $teacherName)->first();
+            if ($walasTeacher) {
+                Classroom::where('name', $className)->update([
+                    'homeroom_teacher_id' => $walasTeacher->id,
+                ]);
+            }
+        }
+
+                // 8. Seeding Jadwal Pelajaran Resmi MAN 20 Jakarta (Sesuai SK Revisi 4)
+        $officialSchedule = OfficialScheduleData::getDaysSchedule();
+        $pramukaSubject = Subject::where('name', 'Pramuka Wajib')->first();
+        $pramukaTeacher = Teacher::where('name', 'ARIEL BONARDO H. LIMBONG, S.Pd.')->first();
+
+        foreach ($officialSchedule as $day => $dInfo) {
+            foreach ($dInfo['periods'] as $pNum => $pData) {
+                if (!isset($pData['slots'])) continue;
+
+                $timeSlot = TimeSlot::where('day', $day)->where('period', $pNum)->first();
+                if (!$timeSlot) continue;
+
+                foreach ($pData['slots'] as $clsCode => $slot) {
+                    $clsName = str_replace('-', '.', $clsCode);
+                    $classroom = Classroom::where('name', $clsName)->first();
+                    if (!$classroom) continue;
+
+                    if ($slot === 'PRAMUKA') {
+                        if ($pramukaSubject && $pramukaTeacher) {
+                            $pramukaAssign = TeacherAssignment::firstOrCreate(
+                                [
+                                    'teacher_id' => $pramukaTeacher->id,
+                                    'subject_id' => $pramukaSubject->id,
+                                    'classroom_id' => $classroom->id,
+                                ],
+                                ['hours_per_week' => 2]
+                            );
+                            Schedule::updateOrCreate(
+                                [
+                                    'classroom_id' => $classroom->id,
+                                    'time_slot_id' => $timeSlot->id,
+                                ],
+                                [
+                                    'teacher_id' => $pramukaTeacher->id,
+                                    'subject_id' => $pramukaSubject->id,
+                                    'teacher_assignment_id' => $pramukaAssign->id,
+                                    'day' => $day,
+                                    'period' => $pNum,
+                                ]
+                            );
+                        }
+                        continue;
+                    }
+
+                    preg_match('/^(\d+)([A-Z]?)$/', $slot, $m);
+                    $orderNo = (int)($m[1] ?? 0);
+                    $suffix = $m[2] ?? '';
+
+                    $teacher = Teacher::where('order_no', $orderNo)->first();
+                    if (!$teacher) continue;
+
+                    $assigns = TeacherAssignment::where('teacher_id', $teacher->id)
+                        ->where('classroom_id', $classroom->id)
+                        ->with('subject')
+                        ->get();
+
+                    $chosenAssign = null;
+                    if ($assigns->count() === 1) {
+                        $chosenAssign = $assigns->first();
+                    } elseif ($assigns->count() > 1) {
+                        if ($orderNo === 15) {
+                            $chosenAssign = $assigns->first(function($a) use ($suffix) {
+                                return $suffix === 'E' ? str_contains($a->subject->name, 'EKONOMI') : str_contains($a->subject->name, 'KETERAMPILAN');
+                            });
+                        } elseif ($orderNo === 17) {
+                            $chosenAssign = $assigns->first(function($a) use ($suffix) {
+                                return $suffix === 'T' ? str_contains($a->subject->name, 'TINGKAT LANJUT') : !str_contains($a->subject->name, 'TINGKAT LANJUT');
+                            });
+                        } elseif ($orderNo === 18) {
+                            $chosenAssign = $assigns->first(function($a) use ($suffix) {
+                                return $suffix === 'A' ? str_contains($a->subject->name, 'AKIDAH') : (str_contains($a->subject->name, 'QUR') || str_contains($a->subject->name, 'HADIST'));
+                            });
+                        } elseif ($orderNo === 30) {
+                            $chosenAssign = $assigns->first(function($a) use ($suffix) {
+                                return $suffix === 'G' ? str_contains($a->subject->name, 'GEOGRAFI') : str_contains($a->subject->name, 'PANCASILA');
+                            });
+                        } elseif ($orderNo === 33) {
+                            $chosenAssign = $assigns->first(function($a) use ($suffix) {
+                                return $suffix === 'S' ? str_contains($a->subject->name, 'SEJARAH') : str_contains($a->subject->name, 'PANCASILA');
+                            });
+                        } else {
+                            $chosenAssign = $assigns->first();
+                        }
+                    }
+
+                    if ($chosenAssign) {
+                        Schedule::updateOrCreate(
+                            [
+                                'classroom_id' => $classroom->id,
+                                'time_slot_id' => $timeSlot->id,
+                            ],
+                            [
+                                'teacher_id' => $teacher->id,
+                                'subject_id' => $chosenAssign->subject_id,
+                                'teacher_assignment_id' => $chosenAssign->id,
+                                'day' => $day,
+                                'period' => $pNum,
+                            ]
+                        );
+                    }
+                }
+            }
+        }
     }
 }

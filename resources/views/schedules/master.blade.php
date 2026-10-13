@@ -12,7 +12,7 @@
                 <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-200">
                     SK RESMI AKTIF
                 </span>
-                <span class="text-xs text-slate-400 font-medium">Revisi 4 Berlaku Mulai 12 Oktober 2026</span>
+                <span class="text-xs text-slate-400 font-medium">{{ $officialHeader['revision'] ?? 'Revisi 4 Berlaku Mulai 12 Oktober 2026' }}</span>
             </div>
             <h2 class="text-xl font-extrabold text-slate-800 tracking-tight mt-1">Master Jadwal Pelajaran Madrasah</h2>
             <p class="text-xs text-slate-500 mt-0.5">Jadwal lengkap seluruh rombel X-1 s/d XII-5, distribusi tugas 36 guru, dan daftar wali kelas</p>
@@ -142,7 +142,7 @@
                                             'Selasa' => "S<br>E<br>L<br>A<br>S<br>A",
                                             'Rabu' => "R<br>A<br>B<br>U",
                                             'Kamis' => "K<br>A<br>M<br>I<br>S",
-                                            'Jumat' => "J<br>U<br>M<br>-<br>I<br>A<br>T",
+                                            'Jumat' => "J<br>U<br>M<br>A<br>T",
                                         ];
                                     @endphp
 

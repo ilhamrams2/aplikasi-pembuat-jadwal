@@ -9,9 +9,8 @@ class OfficialScheduleData
         return [
             'title' => 'JADWAL PELAJARAN SEMESTER GANJIL',
             'school_name' => 'MAN 20 JAKARTA TIMUR',
-            'academic_year' => 'TAHUN PELAJARAN 2026-2027',
-            'revision' => 'REVISI4_BERLAKU MULAI : Senin, 12 Oktober 2026',
-            'date_signed' => 'Jakarta, 13 Juli 2026',
+            'revision' => \App\Models\SchoolSetting::get('schedule_revision', 'REVISI4_BERLAKU MULAI : Senin, 12 Oktober 2026'),
+            'date_signed' => \App\Models\SchoolSetting::get('date_signed', 'Jakarta, 13 Juli 2026'),
             'principal_name' => 'Drs. Sodikin, M.Si',
             'principal_nip' => '196810212003121001',
             'principal_title' => 'Kepala MAN 20 Jakarta',
